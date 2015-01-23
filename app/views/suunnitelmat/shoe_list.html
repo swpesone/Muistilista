@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Käyttäjän Saara kenkälista</h1>
+
+  <p>
+    <a href="#" class="btn btn-success">Lisää kenkä</a>
+  </p>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Merkki</th>
+        <th>Malli</th>
+        <th>Tyyppi</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Listataan kengät tähän -->
+      <tr>
+        <td>Pennangalan</td>
+        <td><a href="#">Libby 16 Plate Victim Boots</a></td>
+        <td>Saappaat</td>
+        <th><a class="btn btn-default btn-sm" href="#">Muokkaa</a></th>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}
