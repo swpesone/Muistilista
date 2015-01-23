@@ -4,6 +4,7 @@ Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://swpesone.users.cs.helsinki.fi/muistilista/)
 * [Linkki dokumentaatiooni](https://github.com/swpesone/Muistilista/blob/master/doc/dokumentaatio.pdf)
+* 
 * [Linkki kenkälistaan](http://swpesone.users.cs.helsinki.fi/muistilista/shoe)
 * [Linkki esittelysivulle](http://swpesone.users.cs.helsinki.fi/muistilista/shoe/1)
 * [Linkki muokkaussivulle](http://swpesone.users.cs.helsinki.fi/muistilista/shoe/2)
@@ -12,4 +13,4 @@ Yleisiä linkkejä:
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Muistilista.html) 
+Kenkälista kenkien tietojen (merkki, malli) tallentamiseen. Kenkiä voi järjestää luokkiin tyylin mukaan, ja kenkä voi kuulua useampaan luokkaan.
