@@ -1,18 +1,28 @@
 <?php
-
-  $app->get('/', function() {
-    HelloWorldController::index();
-  });
-
-  $app->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-});
-    $app->get('/shoe', function() {
-  HelloWorldController::shoe_list();
+//etusivu = kenkien listaussivu
+$app->get('/', function() {
+  ShoeController::index();
 });
 
-$app->get('/shoe/1', function() {
-  HelloWorldController::shoe_show();
+$app->get('/hiekkalaatikko', function() {
+  HelloWorldController::sandbox();
+});
+//kenkien listaussivu 
+$app->get('/shoe', function() {
+  ShoeController::index();
+});
+
+$app->post('/shoe', function(){
+  ShoeController::store();
+});
+// Kengän lisäyslomakkeen näyttäminen
+$app->get('/shoe/new', function(){
+  ShoeController::create();	
+});
+
+//kengän esittelysivu
+$app->get('/shoe/:id', function($id) {
+  ShoeController::show($id);
 });
 
 $app->get('/shoe/2', function() {
@@ -22,4 +32,4 @@ $app->get('/shoe/2', function() {
 $app->get('/login', function() {
   HelloWorldController::login();
 
-  });
+});

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Lisää kenkälistaan uusi kenkä</h1>
+
+  <form method="post" action="{{base_path}}/shoe">
+    <div class="form-group">
+      <label>Merkki</label>
+      <input name="brand" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Malli</label>
+      <input name="name" class="form-control" type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Kuvaus</label>
+      <textarea name="description" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+{% endblock %}
