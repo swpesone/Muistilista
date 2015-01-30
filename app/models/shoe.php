@@ -2,7 +2,7 @@
 
 class Shoe extends BaseModel{
     //attribuutit
-    public $id, $person_id, $brand, $name, $model_id, $description;
+    public $id, $person_id, $brand, $name, $model_id, $description, $model_name;
     //konstruktori
     public function __construct($attributes){
     parent::__construct($attributes);
@@ -11,7 +11,7 @@ class Shoe extends BaseModel{
   public static function all(){
     $shoes = array();
     // Kutsutaan luokan DB staattista metodia query
-    $rows = DB::query('SELECT * FROM Shoe');
+    $rows = DB::query('SELECT Shoe.id, Shoe.person_id, Shoe.brand, Shoe.name, Shoe.model_id, Shoe.description, Model.name AS model_name FROM Shoe LEFT JOIN Model ON Shoe.model_id = Model.id');
 
     // Käydään kyselyn tuottamat rivit läpi
     foreach($rows as $row){
@@ -22,7 +22,8 @@ class Shoe extends BaseModel{
         'brand' => $row['brand'],
         'name' => $row['name'],
         'model_id' => $row['model_id'],
-        'description' => $row['description']        
+        'description' => $row['description'],
+        'model_name' => $row['model_name']
       ));
     }
 

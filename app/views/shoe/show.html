@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{shoe.name}}</h1>
+  <!-- Painikkeet tähän -->
+  <p>
+    <button class="btn btn-danger">Poista</button> <a href="#" class="btn btn-default">Muokkaa</a>
+  </p>
+  <!-- Tiedot tulee listana tähän -->
+  <ul>
+    <li><strong>Merkki:</strong> {{shoe.brand}}</li>
+    <li><strong>Tyyppi:</strong> {{shoe.model_name}}</li>
+  </ul>
+  <!-- Kuvaus tulee tähän -->
+  <p>
+    {{shoe.description}}
+  </p>
+{% endblock %}

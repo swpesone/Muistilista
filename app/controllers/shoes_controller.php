@@ -24,6 +24,11 @@ class ShoeController extends BaseController{
   }
 
   public static function create(){
-  	self::render_view('shoe/new.html');
+    self::render_view('shoe/new.html');
+  }
+
+  public static function show($id){
+    $shoe = Shoe::find($id);
+    self::render_view('shoe/show.html', array('shoe' => $shoe));
   }
 }  
