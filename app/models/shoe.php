@@ -6,6 +6,8 @@ class Shoe extends BaseModel{
     //konstruktori
     public function __construct($attributes){
     parent::__construct($attributes);
+
+     $this->validators = array('validate_brand', 'validate_name', 'validate_description');
   }
 
   public static function all(){
@@ -51,8 +53,60 @@ class Shoe extends BaseModel{
     return null;
   }
 
-  public static function create($shoe) {
+  public static function create($shoe){
     $rows = DB::query('INSERT INTO Shoe (brand, name, description) VALUES (:brand, :name, :description) RETURNING id', $shoe);
     return $rows[0]['id'];
   }
+
+  public static function destroy($id){
+    DB::query('DELETE FROM Shoe WHERE id = :id', array('id' => $id));
+  }
+
+  public static function update($id, $attributes){
+    $brand = $attributes['brand'];
+    $name = $attributes['name'];
+    $description = $attributes['description'];
+
+    DB::query('UPDATE Shoe SET brand = :brand, name = :name, description = :description WHERE id = :id', array('id' => $id, 'brand' => $brand, 'name' => $name, 'description' => $description));
+  }
+
+  public function validate_brand(){
+    $errors = array();
+
+    if($this->brand == '' || $this->brand == null){
+    $errors[] = 'Merkin nimi ei saa olla tyhjä!';
+    }
+    if(strlen($this->brand) < 3){
+    $errors[] = 'Merkin nimen pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
+  public function validate_name(){
+  $errors = array();
+
+  if($this->name == '' || $this->name == null){
+    $errors[] = 'Mallin nimi ei saa olla tyhjä!';
+  }
+  if(strlen($this->name) < 3){
+    $errors[] = 'Mallin nimen pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
+  public function validate_description(){
+  $errors = array();
+
+  if($this->description == '' || $this->description == null){
+    $errors[] = 'Kuvaus ei saa olla tyhjä!';
+  }
+  if(strlen($this->name) < 3){
+    $errors[] = 'Kuvauksen pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
 }

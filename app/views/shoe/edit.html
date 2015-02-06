@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Lisää kenkälistaan uusi kenkä</h1>
+  <h1>Muokkaa kenkää {{shoe.name}}</h1>
 
-  {% if errors %}
+    {% if errors %}
     <div class="alert alert-danger">
       <ul>
         {% for error in errors %}
@@ -16,7 +16,7 @@
   <div class="alert alert-danger">
   </div>
 
-  <form method="post" action="{{base_path}}/shoe">
+  <form method="post" action="{{base_path}}/shoe/{{attributes.id}}/edit">
     <div class="form-group">
       <label class="control-label">Merkki</label>
       <input name="brand" class="form-control" value="{{attributes.brand}}" type="text">
