@@ -1,4 +1,5 @@
 <?php
+
 $app->get('/', function() {
   // Etusivu (kenkien listaussivu)	
   ShoeController::index();
@@ -42,6 +43,7 @@ $app->post('/shoe/:id/destroy', function($id){
   ShoeController::destroy($id);
 });
 
+
 $app->get('/login', function(){
   // Kirjautumislomakkeen esittäminen
   PersonController::login();
@@ -50,4 +52,39 @@ $app->get('/login', function(){
 $app->post('/login', function(){
   // Kirjautumisen käsittely
   PersonController::handle_login();
+});
+
+$app->post('/logout', function(){
+  PersonController::logout();
+});
+
+
+
+$app->get('/model', function(){
+  ModelController::index();
+});
+
+$app->post('/model', function(){
+  ModelController::store();
+});
+
+$app->get('/model/new', function(){
+  // Tyypin lisäyslomakkeen näyttäminen 
+  ModelController::create(); 
+});
+
+$app->get('/model/:id/edit', function($id){
+  ModelController::edit($id);
+});
+
+//$app->get('/model/:id', function($id){
+//  ModelController::show($id);
+//});
+
+$app->post('/model/:id/edit', function($id){
+  ModelController::update($id);
+});
+
+$app->post('/model/:id/destroy', function($id){
+  ModelController::destroy($id);
 });

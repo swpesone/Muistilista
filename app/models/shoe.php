@@ -2,7 +2,7 @@
 
 class Shoe extends BaseModel{
     //attribuutit
-    public $id, $person_id, $brand, $name, $model_id, $description, $model_name;
+    public $id, $person_id, $brand, $name, $description, $models;
     //konstruktori
     public function __construct($attributes){
     parent::__construct($attributes);
@@ -10,10 +10,11 @@ class Shoe extends BaseModel{
      $this->validators = array('validate_brand', 'validate_name', 'validate_description');
   }
 
-  public static function all(){
+  public static function all($person_id){
+    
     $shoes = array();
     // Kutsutaan luokan DB staattista metodia query
-    $rows = DB::query('SELECT Shoe.id, Shoe.person_id, Shoe.brand, Shoe.name, Shoe.model_id, Shoe.description, Model.name AS model_name FROM Shoe LEFT JOIN Model ON Shoe.model_id = Model.id');
+    $rows = DB::query('SELECT Shoe.id, Shoe.person_id, Shoe.brand, Shoe.name, Shoe.description FROM Shoe WHERE Shoe.person_id = :person_id', array('person_id' => $person_id));
 
     // Käydään kyselyn tuottamat rivit läpi
     foreach($rows as $row){
@@ -23,9 +24,7 @@ class Shoe extends BaseModel{
         'person_id' => $row['person_id'],
         'brand' => $row['brand'],
         'name' => $row['name'],
-        'model_id' => $row['model_id'],
-        'description' => $row['description'],
-        'model_name' => $row['model_name']
+        'description' => $row['description']
       ));
     }
 
@@ -33,19 +32,23 @@ class Shoe extends BaseModel{
   }
 //metodi, joka hakee tietokannasta tietyllä id:llä varustetun kengän:
   public static function find($id){
-    $rows = DB::query('SELECT * FROM Shoe WHERE id = :id LIMIT 1', array('id' => $id));
+    $rows = DB::query('SELECT Shoe.id, Shoe.brand, Shoe.name, Shoe.description, Model.id as "model_id", Model.name as "model_name" FROM Shoe LEFT JOIN Shoe_Model ON Shoe_Model.shoe_id = Shoe.id LEFT JOIN Model ON Model.id = Shoe_Model.model_id WHERE Shoe.id = :id', array('id' => $id));
 
     if(count($rows) > 0){
       $row = $rows[0];
 
       $shoe = new Shoe(array(
         'id' => $row['id'],
-        'person_id' => $row['person_id'],
         'brand' => $row['brand'],
         'name' => $row['name'],
-        'model_id' => $row['model_id'],
+        'models' => array(),
         'description' => $row['description']
       ));
+
+      foreach($rows as $r){
+        $shoe->models[] = new Model(array('id' => $r['model_id'], 'name' => $r['model_name']));
+       // $shoe['models'][] = new Model(array('id' => $r['model_id'], 'name' => $r['model_name']));
+      }
 
       return $shoe;
     }
@@ -54,8 +57,13 @@ class Shoe extends BaseModel{
   }
 
   public static function create($shoe){
-    $rows = DB::query('INSERT INTO Shoe (brand, name, description) VALUES (:brand, :name, :description) RETURNING id', $shoe);
-    return $rows[0]['id'];
+    $model_id = $shoe['model_id'];
+    unset($shoe['model_id']);
+    $rows = DB::query('INSERT INTO Shoe (brand, name, description, person_id) VALUES (:brand, :name, :description, :person_id) RETURNING id', $shoe);
+    $id = $rows[0]['id'];
+    DB::query('INSERT INTO Shoe_Model (model_id, shoe_id) VALUES (:model, :shoe)', array('shoe' => $id, 'model' => $model_id)); 
+
+    return $id;
   }
 
   public static function destroy($id){

@@ -13,8 +13,6 @@
     </div>
   {% endif %}
 
-  <div class="alert alert-danger">
-  </div>
 
   <form method="post" action="{{base_path}}/shoe">
     <div class="form-group">
@@ -25,6 +23,15 @@
     <div class="form-group">
       <label class="control-label">Malli</label>
       <input name="name" class="form-control" value="{{attributes.name}}" type="text">
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Tyyppi</label>
+      <select class="form-control" name="model_id">
+        {% for model in models %}
+        <option value="{{model.id}}">{{model.name}}</option>
+        {% endfor %}
+      </select>
     </div>
 
     <div class="form-group">

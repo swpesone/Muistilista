@@ -2,16 +2,25 @@
 
 class ShoeController extends BaseController{
    public static function index(){
+
+    self::check_logged_in();
+    $person = self::get_user_logged_in();
+    $person_id = $person->id;
     // Haetaan kaikki kengät tietokannasta
-    $shoes = Shoe::all();
+    $shoes = Shoe::all($person_id);
     // Renderöidään views/shoe kansiossa sijaitseva tiedosto index.html muuttujan $shoes datalla
     self::render_view('shoe/index.html', array('shoes' => $shoes));
   }
 
   public static function store(){
+    self::check_logged_in();
     $params = $_POST;
+    $person = self::get_user_logged_in();
+    $person_id = $person->id;
 
     $attributes = array(
+      'person_id' => $person_id,
+      'model_id' => $params['model_id'],
       'brand' => $params['brand'],
       'name' => $params['name'],
       'description' => $params['description']
@@ -32,24 +41,30 @@ class ShoeController extends BaseController{
   }
 
   public static function create(){
-    self::render_view('shoe/new.html');
+    self::check_logged_in();
+    $models = Model::all();
+    self::render_view('shoe/new.html', array('models' => $models));
   }
 
   public static function show($id){
+    self::check_logged_in();
     $shoe = Shoe::find($id);
     self::render_view('shoe/show.html', array('shoe' => $shoe));
   }
   //kengän muokkaaminen (lomakkeen esittäminen)
   public static function edit($id){
+    self::check_logged_in();
     $shoe = Shoe::find($id);
 
     self::render_view('shoe/edit.html', array('attributes' => $shoe));
   }
   //kengän muokkaaminen (lomakkeen käsittely)
   public static function update($id){
+    self::check_logged_in();
     $params = $_POST;
 
     $attributes = array(
+      'id' => $id,
       'brand' => $params['brand'],
       'name' => $params['name'],
       'description' => $params['description']
@@ -68,6 +83,7 @@ class ShoeController extends BaseController{
   }
   // Kengän poistaminen
   public static function destroy($id){
+    self::check_logged_in();
     Shoe::destroy($id);
 
     self::redirect_to('/shoe', array('message' => 'Kenkä on poistettu onnistuneesti!'));
