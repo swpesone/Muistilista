@@ -4,7 +4,7 @@
   <h1>{{shoe.name}}</h1>
   <!-- Painikkeet tähän -->
   <p>
-    <form method="post" style="display: inline-block" action="{{base_path}}/shoe/{{shoe.id}}/destroy">
+    <form method="post" style="display: inline-block" action="{{base_path}}/shoe/{{shoe.id}}/destroy" class="destroy-form" data-confirm="Oletko varma, että haluat poistaa kengän?"> 
   <button type="submit" class="btn btn-danger">Poista</button>
 </form> <a href="{{base_path}}/shoe/{{shoe.id}}/edit" class="btn btn-default">Muokkaa</a>
   </p>

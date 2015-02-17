@@ -23,7 +23,7 @@
         <tr>
           <td>{{model.name}}</td>
           <td><a class="btn btn-default btn-sm" href="{{base_path}}/model/{{model.id}}/edit">Muokkaa</a></td>
-          <td><form method="post" action="{{base_path}}/model/{{model.id}}/destroy"><button type="submit" class="btn btn-danger">Poista</button></form></td>
+          <td><form method="post" action="{{base_path}}/model/{{model.id}}/destroy" class="destroy-form" data-confirm="Oletko varma, että haluat poistaa kenkätyypin?"><button type="submit" class="btn btn-danger">Poista</button></form></td>
         </tr>
       {% endfor %}
     </tbody>

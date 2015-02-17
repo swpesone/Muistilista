@@ -47,7 +47,6 @@ class Shoe extends BaseModel{
 
       foreach($rows as $r){
         $shoe->models[] = new Model(array('id' => $r['model_id'], 'name' => $r['model_name']));
-       // $shoe['models'][] = new Model(array('id' => $r['model_id'], 'name' => $r['model_name']));
       }
 
       return $shoe;
@@ -57,12 +56,15 @@ class Shoe extends BaseModel{
   }
 
   public static function create($shoe){
-    $model_id = $shoe['model_id'];
-    unset($shoe['model_id']);
+    $models= $shoe['models'];
+    unset($shoe['models']);
     $rows = DB::query('INSERT INTO Shoe (brand, name, description, person_id) VALUES (:brand, :name, :description, :person_id) RETURNING id', $shoe);
     $id = $rows[0]['id'];
-    DB::query('INSERT INTO Shoe_Model (model_id, shoe_id) VALUES (:model, :shoe)', array('shoe' => $id, 'model' => $model_id)); 
-
+ 
+    foreach($models as $model){
+      DB::query('INSERT INTO Shoe_Model (model_id, shoe_id) VALUES (:model, :shoe)', array('shoe' => $id, 'model' => $model)); 
+    }
+    
     return $id;
   }
 
@@ -71,11 +73,19 @@ class Shoe extends BaseModel{
   }
 
   public static function update($id, $attributes){
+    $models = $attributes['models'];
+    unset($attributes['models']);
+
     $brand = $attributes['brand'];
     $name = $attributes['name'];
     $description = $attributes['description'];
 
     DB::query('UPDATE Shoe SET brand = :brand, name = :name, description = :description WHERE id = :id', array('id' => $id, 'brand' => $brand, 'name' => $name, 'description' => $description));
+    DB::query('DELETE FROM Shoe_Model WHERE shoe_id = :shoe_id', array('shoe_id' => $id));
+
+    foreach($models as $model){
+      DB::query('INSERT INTO Shoe_Model (model_id, shoe_id) VALUES (:model, :shoe)', array('shoe' => $id, 'model' => $model)); 
+    }
   }
 
   public function validate_brand(){

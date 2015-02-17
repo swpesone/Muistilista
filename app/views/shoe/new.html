@@ -27,7 +27,7 @@
 
     <div class="form-group">
       <label class="control-label">Tyyppi</label>
-      <select class="form-control" name="model_id">
+      <select class="form-control" name="model_id[]" multiple>
         {% for model in models %}
         <option value="{{model.id}}">{{model.name}}</option>
         {% endfor %}

@@ -20,7 +20,7 @@ class ShoeController extends BaseController{
 
     $attributes = array(
       'person_id' => $person_id,
-      'model_id' => $params['model_id'],
+      'models' => $params['model_id'],
       'brand' => $params['brand'],
       'name' => $params['name'],
       'description' => $params['description']
@@ -36,7 +36,8 @@ class ShoeController extends BaseController{
       self::redirect_to('/shoe/' . $id, array('message' => 'Kenkä on lisätty listallesi!'));          
     }else{
       //Kengässä on jotain vikaa
-      self::render_view('shoe/new.html', array('errors' => $errors, 'attributes' => $attributes));
+      $models = Model::all();
+      self::render_view('shoe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'models' => $models));
     }    
   }
 
@@ -55,8 +56,9 @@ class ShoeController extends BaseController{
   public static function edit($id){
     self::check_logged_in();
     $shoe = Shoe::find($id);
+    $models = Model::all();
 
-    self::render_view('shoe/edit.html', array('attributes' => $shoe));
+    self::render_view('shoe/edit.html', array('attributes' => $shoe, 'models' => $models));
   }
   //kengän muokkaaminen (lomakkeen käsittely)
   public static function update($id){
@@ -66,6 +68,7 @@ class ShoeController extends BaseController{
     $attributes = array(
       'id' => $id,
       'brand' => $params['brand'],
+      'models' => $params['model_id'],
       'name' => $params['name'],
       'description' => $params['description']
     );
@@ -74,7 +77,8 @@ class ShoeController extends BaseController{
     $errors = $shoe->errors();
 
     if(count($errors) > 0){
-      self::render_view('shoe/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+      $models = Model::all();
+      self::render_view('shoe/edit.html', array('errors' => $errors, 'attributes' => $attributes, 'models' => $models));
     }else{
       Shoe::update($id, $attributes);
 
