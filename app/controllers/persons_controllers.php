@@ -11,7 +11,7 @@ class PersonController extends BaseController{
     $person = Person::authenticate($params['username'], $params['password']);
 
     if(!$person){
-      self::redirect_to('/login', array('error' => 'Väärä käyttäjätunnus tai salasana!'));
+      self::redirect_to('/login', array('errors' => 'Väärä käyttäjätunnus tai salasana!'));
     }else{
       $_SESSION['person'] = $person->id;
 
@@ -23,5 +23,29 @@ class PersonController extends BaseController{
     $_SESSION['person'] = null;
 
     self::redirect_to('/login', array('message' => 'Olet kirjautunut ulos!'));
+  }
+
+  public static function register(){
+      self::render_view('register.html');
+  }
+
+  public static function store(){
+    $params = $_POST;
+
+    $attributes = array(
+      'username' => $params['username'],
+      'password' => $params['password']
+    //  'password_again' => $params['password-again']
+    );
+
+    $person = new Person($attributes);
+    $errors = $person->errors();
+
+    if(count($errors) == 0){
+      Person::create($attributes);
+      self::redirect_to('/login.html', array('message' => 'Tervetuloa käyttäjäksi!'));
+    }else{
+      self::render_view('/register.html', array('errors' => $errors, 'attributes' => $attributes));
+    } 
   }
 }

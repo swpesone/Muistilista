@@ -18,6 +18,10 @@ class ShoeController extends BaseController{
     $person = self::get_user_logged_in();
     $person_id = $person->id;
 
+    if(!key_exists('model_id', $params)){
+      $params['model_id'] = null;
+    }
+
     $attributes = array(
       'person_id' => $person_id,
       'models' => $params['model_id'],

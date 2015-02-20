@@ -59,6 +59,15 @@ $app->post('/logout', function(){
 });
 
 
+$app->get('/register', function(){
+  // Rekisteröitymislomakkeen esittäminen
+  PersonController::register();
+});
+
+$app->post('/register', function(){
+  PersonController::store();
+});
+
 
 $app->get('/model', function(){
   ModelController::index();

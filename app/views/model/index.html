@@ -5,6 +5,14 @@
   <h1>Käyttäjän {{user_logged_in.username}} kenkätyypit</h1>
   {% endif %}
 
+  {% if message %}
+    <div class="alert alert-success">
+      <ul>
+         {{message}}
+         </ul>
+    </div>
+ {% endif %}  
+
   <p>
     <a href="{{base_path}}/model/new" class="btn btn-success">Lisää kenkätyyppi</a>
   </p>

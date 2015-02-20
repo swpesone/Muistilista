@@ -3,6 +3,15 @@
 {% block content %}
   <h1>{{shoe.name}}</h1>
   <!-- Painikkeet tähän -->
+
+{% if message %}
+    <div class="alert alert-success">
+      <ul>
+         {{message}}
+         </ul>
+    </div>
+ {% endif %}  
+  
   <p>
     <form method="post" style="display: inline-block" action="{{base_path}}/shoe/{{shoe.id}}/destroy" class="destroy-form" data-confirm="Oletko varma, että haluat poistaa kengän?"> 
   <button type="submit" class="btn btn-danger">Poista</button>

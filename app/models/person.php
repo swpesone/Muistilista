@@ -1,10 +1,12 @@
 <?php
 class Person extends BaseModel{
     
-    public $id, $username, $password;
+    public $id, $username, $password, $password_again;
 
     public function __construct($attributes){
     parent::__construct($attributes);
+
+    $this->validators = array('validate_username', 'validate_password', 'validate_password_again');
   }
 
   public static function all(){
@@ -61,4 +63,40 @@ class Person extends BaseModel{
     }
     return false;
   }
+
+  public function validate_username(){
+  $errors = array();
+
+  if($this->username == '' || $this->username == null){
+    $errors[] = 'Käyttäjätunnus ei saa olla tyhjä!';
+  }
+  if(strlen($this->username) < 3){
+    $errors[] = 'Käyttäjätunnuksen pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
+public function validate_password(){
+  $errors = array();
+
+  if($this->password == '' || $this->password == null){
+    $errors[] = 'Salasana ei saa olla tyhjä!';
+  }
+  if(strlen($this->password) < 3){
+    $errors[] = 'Salasanan pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
+public function validate_password_again(){
+  $errors = array();
+
+  if(!$this->password_again == $this->password){
+    $errors[] = 'Salasana ei täsmää';
+  }
+
+  return $errors;
+}
 }

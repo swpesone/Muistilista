@@ -7,7 +7,7 @@ class Shoe extends BaseModel{
     public function __construct($attributes){
     parent::__construct($attributes);
 
-     $this->validators = array('validate_brand', 'validate_name', 'validate_description');
+     $this->validators = array('validate_brand', 'validate_name', 'validate_description', 'validate_model');
   }
 
   public static function all($person_id){
@@ -56,7 +56,7 @@ class Shoe extends BaseModel{
   }
 
   public static function create($shoe){
-    $models= $shoe['models'];
+    $models = $shoe['models'];
     unset($shoe['models']);
     $rows = DB::query('INSERT INTO Shoe (brand, name, description, person_id) VALUES (:brand, :name, :description, :person_id) RETURNING id', $shoe);
     $id = $rows[0]['id'];
@@ -69,6 +69,7 @@ class Shoe extends BaseModel{
   }
 
   public static function destroy($id){
+    DB::query('DELETE FROM Shoe_Model WHERE shoe_id = :id', array('id' => $id)); 
     DB::query('DELETE FROM Shoe WHERE id = :id', array('id' => $id));
   }
 
@@ -122,6 +123,16 @@ class Shoe extends BaseModel{
   }
   if(strlen($this->name) < 3){
     $errors[] = 'Kuvauksen pituuden tulee olla vähintään kolme merkkiä';
+  }
+
+  return $errors;
+}
+
+  public function validate_model(){
+  $errors = array();
+
+  if($this->models == null || count($this->models) == 0){
+    $errors[] = 'Malli ei saa olla tyhjä!';
   }
 
   return $errors;

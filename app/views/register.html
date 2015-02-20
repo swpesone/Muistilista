@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Kirjaudu sisään</h1>
+  <h1>Rekisteröidy</h1>
 
 {% if errors %}
     <div class="alert alert-danger">
@@ -13,28 +13,30 @@
     </div>
   {% endif %}
 
-{% if message %}
+  {% if message %}
     <div class="alert alert-success">
       <ul>
          {{message}}
          </ul>
     </div>
- {% endif %}   
+ {% endif %}  
 
-  <!-- Kaikki lomakkeen elementit form-tagin sisään -->
-  <form method="post" action="{{base_path}}/login">
-    <!-- Tekstikenttä käyttäjätunnukselle -->
+  <form method="post" action="{{base_path}}/register">
     <div class="form-group">
       <label>Käyttäjätunnus</label>
       <input class="form-control" name="username" type="text">
     </div>
 
-    <!-- Salasanakenttä salasanalle -->
     <div class="form-group">
       <label>Salasana</label>
       <input class="form-control" name="password" type="password">
     </div>
 
-    <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+    <div class="form-group">
+      <label>Salasana uudelleen</label>
+      <input class="form-control" name="password-again" type="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Rekisteröidy</button>
   </form>
 {% endblock %}

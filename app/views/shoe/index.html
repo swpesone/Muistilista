@@ -5,6 +5,14 @@
   <h1>Käyttäjän {{user_logged_in.username}} kenkälista</h1>
   {% endif %}
 
+  {% if message %}
+    <div class="alert alert-success">
+      <ul>
+         {{message}}
+         </ul>
+    </div>
+ {% endif %}  
+
   <p>
     <a href="{{base_path}}/shoe/new" class="btn btn-success">Lisää kenkä</a>
   </p>
