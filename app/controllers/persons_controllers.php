@@ -15,7 +15,7 @@ class PersonController extends BaseController{
     }else{
       $_SESSION['person'] = $person->id;
 
-      self::redirect_to('/', array('message' => 'Tervetuloa takaisin' . $person->username . '!'));
+      self::redirect_to('/', array('message' => 'Tervetuloa takaisin, ' . $person->username . '!'));
     }
   }
 
@@ -34,8 +34,8 @@ class PersonController extends BaseController{
 
     $attributes = array(
       'username' => $params['username'],
-      'password' => $params['password']
-    //  'password_again' => $params['password-again']
+      'password' => $params['password'],
+      'password_again' => $params['password-again']
     );
 
     $person = new Person($attributes);
@@ -43,7 +43,7 @@ class PersonController extends BaseController{
 
     if(count($errors) == 0){
       Person::create($attributes);
-      self::redirect_to('/login.html', array('message' => 'Tervetuloa käyttäjäksi!'));
+      self::redirect_to('/login', array('message' => 'Tervetuloa käyttäjäksi!'));
     }else{
       self::render_view('/register.html', array('errors' => $errors, 'attributes' => $attributes));
     } 

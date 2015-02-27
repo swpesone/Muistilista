@@ -69,6 +69,10 @@ class ShoeController extends BaseController{
     self::check_logged_in();
     $params = $_POST;
 
+    if(!key_exists('model_id', $params)){
+      $params['model_id'] = null;
+    }
+
     $attributes = array(
       'id' => $id,
       'brand' => $params['brand'],

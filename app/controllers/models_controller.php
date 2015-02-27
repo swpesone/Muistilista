@@ -15,6 +15,8 @@ class ModelController extends BaseController{
   }
 
     public static function create(){
+    self::check_logged_in();
+    
 		self::render_view('model/new.html');
   }
 
@@ -33,17 +35,21 @@ class ModelController extends BaseController{
 
       self::redirect_to('/model', array('message' => 'Kenkätyyppi on lisätty listallesi!'));
     }else{
-      self::redirect_to('/model/new.html', array('errors' => $errors, 'attributes' => $attributes));
+      self::redirect_to('/model/new', array('errors' => $errors, 'attributes' => $attributes));
     }
   }
 
 public static function edit($id){
+    self::check_logged_in();
+
     $model = Model::find($id);
 
     self::render_view('model/edit.html', array('attributes' => $model));
   }
 
     public static function update($id){
+    self::check_logged_in();
+
     $params = $_POST;
 
     $attributes = array(
@@ -64,6 +70,8 @@ public static function edit($id){
   }
 
     public static function destroy($id){
+    self::check_logged_in();
+      
     Model::destroy($id);
 
     self::redirect_to('/model', array('message' => 'Kenkätyyppi on poistettu onnistuneesti!'));

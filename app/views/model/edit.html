@@ -13,14 +13,6 @@
     </div>
   {% endif %}
 
-  {% if message %}
-    <div class="alert alert-success">
-      <ul>
-         {{message}}
-         </ul>
-    </div>
- {% endif %}  
-
   <form method="post" action="{{base_path}}/model/{{attributes.id}}/edit">
   
     <div class="form-group">

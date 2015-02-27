@@ -43,6 +43,8 @@ class Person extends BaseModel{
   }
 
   public static function create($person){
+    unset($person['password_again']);
+
     $rows = DB::query('INSERT INTO Person (username, password) VALUES (:username, :password) RETURNING id', $person);
     return $rows[0]['id'];
   }
@@ -93,7 +95,7 @@ public function validate_password(){
 public function validate_password_again(){
   $errors = array();
 
-  if(!$this->password_again == $this->password){
+  if($this->password_again != $this->password){
     $errors[] = 'Salasana ei täsmää';
   }
 

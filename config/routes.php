@@ -86,10 +86,6 @@ $app->get('/model/:id/edit', function($id){
   ModelController::edit($id);
 });
 
-//$app->get('/model/:id', function($id){
-//  ModelController::show($id);
-//});
-
 $app->post('/model/:id/edit', function($id){
   ModelController::update($id);
 });
