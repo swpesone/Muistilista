@@ -5,7 +5,6 @@ Yleisiä linkkejä:
 * [Linkki sovellukseeni](http://swpesone.users.cs.helsinki.fi/muistilista/)
 * [Linkki dokumentaatiooni](https://github.com/swpesone/Muistilista/blob/master/doc/dokumentaatio.pdf)
 
-
 * [Linkki kenkälistaan](http://swpesone.users.cs.helsinki.fi/muistilista/shoe)
 * [Linkki kengän esittelysivulle](http://swpesone.users.cs.helsinki.fi/muistilista/shoe/12)
 * [Linkki kengän lisäyssivulle](http://swpesone.users.cs.helsinki.fi/muistilista/shoe/new)
